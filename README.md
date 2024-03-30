@@ -33,7 +33,7 @@ git clone https://github.com/ErgunKargun/CourierTrackerApi
 Open a terminal, and switch to the root folder of the project, and run the following command to build the whole project.
 
 ```bash
-mvn clean install // build the project
+mvn clean install
 ```
 
 Run the application.
