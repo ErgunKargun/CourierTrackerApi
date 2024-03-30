@@ -12,7 +12,7 @@ After successfully build the application on your local, firstly [register](http:
 
 > Also you can skip register part by using h2 in-memory db username&password defined at config file and directly use sign-in endpoint to get your token. Because when app start, an admin user created by this informations.
 > Tokens expiration duration is also can managed by configuration and it is 1 hour as default. You should create your own secret.yaml configuration file after clone the project into your local machine.
-> You can use /log/courirer endpoint to log courier geolocation and use /entrances endpoint to browse the entrances to the stores.
+> You can use /log/courier endpoint to log courier geolocation and use /entrances endpoint to browse the entrances to the stores.
 
 ## Prerequisites
 
@@ -40,8 +40,6 @@ Run the application.
 
 ```bash
 mvn spring-boot:run
-// or from command line after building
-java -jar target/xxx.jar
 ```
 
 
