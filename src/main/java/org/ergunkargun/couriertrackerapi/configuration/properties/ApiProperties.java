@@ -10,4 +10,8 @@ public class ApiProperties {
     private int circumferenceInMeters;
 
     private int intervalInMinutes;
+
+    private String userName;
+
+    private String userPassword;
 }

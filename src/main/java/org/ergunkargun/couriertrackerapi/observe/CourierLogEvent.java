@@ -1,4 +1,4 @@
-package org.ergunkargun.couriertrackerapi.service.observe;
+package org.ergunkargun.couriertrackerapi.observe;
 
 import lombok.Getter;
 import org.ergunkargun.couriertrackerapi.jpa.entity.Courier;

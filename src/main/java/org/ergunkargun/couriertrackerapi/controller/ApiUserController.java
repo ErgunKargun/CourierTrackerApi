@@ -7,6 +7,8 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,6 +46,13 @@ public class ApiUserController {
     @GetMapping("/users/{id}")
     public ResponseEntity<?> readApiUser(@PathVariable Long id) {
         ApiUser apiUser = apiUserService.read(id);
+        var entityModel = apiUserModelAssembler.toModel(apiUser);
+        return ResponseEntity.ok(entityModel);
+    }
+
+    @GetMapping("/users/me")
+    public ResponseEntity<?> me(@AuthenticationPrincipal UserDetails userDetails) {
+        ApiUser apiUser = apiUserService.read(userDetails.getUsername());
         var entityModel = apiUserModelAssembler.toModel(apiUser);
         return ResponseEntity.ok(entityModel);
     }

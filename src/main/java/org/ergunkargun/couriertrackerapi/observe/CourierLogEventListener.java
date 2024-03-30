@@ -1,4 +1,4 @@
-package org.ergunkargun.couriertrackerapi.service.observe;
+package org.ergunkargun.couriertrackerapi.observe;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ergunkargun.couriertrackerapi.configuration.properties.ApiProperties;

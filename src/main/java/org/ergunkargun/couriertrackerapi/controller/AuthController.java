@@ -29,7 +29,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
-    private  final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     private final JwtProvider jwtProvider;
 
@@ -69,7 +69,7 @@ public class AuthController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> signIn(@RequestBody Auth auth){
+    public ResponseEntity<?> signIn(@RequestBody Auth auth) {
 
         try {
             var authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(auth.getUsername(), auth.getPassword()));

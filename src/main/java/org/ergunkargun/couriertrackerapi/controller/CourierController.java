@@ -3,7 +3,7 @@ package org.ergunkargun.couriertrackerapi.controller;
 import org.ergunkargun.couriertrackerapi.hateoas.CourierModelAssembler;
 import org.ergunkargun.couriertrackerapi.jpa.entity.Courier;
 import org.ergunkargun.couriertrackerapi.service.CourierService;
-import org.ergunkargun.couriertrackerapi.service.observe.CourierLogEvent;
+import org.ergunkargun.couriertrackerapi.observe.CourierLogEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

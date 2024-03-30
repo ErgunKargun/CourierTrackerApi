@@ -35,8 +35,7 @@ public class SecurityConfiguration {
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(c -> c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/register").permitAll()
-                        .requestMatchers("/auth/sign-in").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(("/h2-console/**")).permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/stores/**").hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/v1/stores/**").hasRole(Role.ADMIN.name())

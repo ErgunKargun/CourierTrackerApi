@@ -22,13 +22,11 @@ spring:
   security:
     user:
       name: admin
-      password: m!gr0s
   config:
     import: optional:secrets.yaml
-user:
-  name: user
 api:
   circumference-in-meters: 100
   interval-in-minutes: 1
+  user-name: user
 jwt:
   expiration-duration-in-seconds: 3600000 #1 hour

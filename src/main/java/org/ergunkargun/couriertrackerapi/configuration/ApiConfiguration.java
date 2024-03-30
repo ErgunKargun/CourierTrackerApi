@@ -6,9 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.ergunkargun.couriertrackerapi.jpa.entity.ApiUser;
 import org.ergunkargun.couriertrackerapi.jpa.entity.Store;
 import org.ergunkargun.couriertrackerapi.jpa.entity.enumaration.Role;
+import org.ergunkargun.couriertrackerapi.observe.CourierLogEventListener;
 import org.ergunkargun.couriertrackerapi.service.ApiUserService;
 import org.ergunkargun.couriertrackerapi.service.StoreService;
-import org.ergunkargun.couriertrackerapi.service.observe.CourierLogEventListener;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cglib.core.internal.Function;
@@ -54,15 +54,17 @@ public class ApiConfiguration {
     private void initializeApiUsers(ApiUserService apiUserService, PasswordEncoder passwordEncoder) {
 
         apiUserService.create(ApiUser.builder()
-                .username(environment.getProperty("security.user.name"))
-                .password(passwordEncoder.encode(environment.getProperty("security.user.password")))
+                .email("abc.admin@migrosone.com")
+                .username(environment.getProperty("spring.security.user.name"))
+                .password(passwordEncoder.encode(environment.getProperty("spring.security.user.password")))
                 .role(Role.ADMIN)
                 .build()
         );
 
         apiUserService.create(ApiUser.builder()
-                .username(environment.getProperty("user.name"))
-                .password(passwordEncoder.encode(environment.getProperty("user.password")))
+                .email("abc.user@migrosone.com")
+                .username(environment.getProperty("api.user-name"))
+                .password(passwordEncoder.encode(environment.getProperty("api.user-password")))
                 .role(Role.USER)
                 .build()
         );
