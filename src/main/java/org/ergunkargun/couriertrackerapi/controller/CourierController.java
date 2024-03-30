@@ -1,5 +1,11 @@
 package org.ergunkargun.couriertrackerapi.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.ergunkargun.couriertrackerapi.hateoas.CourierModelAssembler;
 import org.ergunkargun.couriertrackerapi.jpa.entity.Courier;
 import org.ergunkargun.couriertrackerapi.service.CourierService;
@@ -54,8 +60,34 @@ public class CourierController {
         return ResponseEntity.ok(collectionModel);
     }
 
+    @Operation(summary = "Get courier by id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successful",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(
+                                            implementation = Courier.class
+                                    )
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad Request",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Courier not found",
+                    content = @Content
+            )
+    }
+    )
     @GetMapping("/couriers/{id}")
-    public ResponseEntity<?> readCourier(@PathVariable Long id) {
+    public ResponseEntity<?> readCourier(@Parameter(description = "id of courier") @PathVariable Long id) {
         Courier courier = courierService.read(id);
         var entityModel = courierModelAssembler.toModel(courier);
         return ResponseEntity.ok(entityModel);

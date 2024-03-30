@@ -38,6 +38,11 @@ public class SecurityConfiguration {
                 .exceptionHandling(c -> c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/openapi").permitAll()
+                        .requestMatchers("/openapi.yaml").permitAll()
+                        .requestMatchers("/swagger").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/stores/**").hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/v1/stores/**").hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.DELETE, "/v1/stores/**").hasRole(Role.ADMIN.name())
@@ -49,7 +54,10 @@ public class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/h2-console/**"));
+        return (web) -> web.ignoring()
+                .requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+                .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
+                .requestMatchers(new AntPathRequestMatcher("/openapi/**"));
     }
 
     @Bean
