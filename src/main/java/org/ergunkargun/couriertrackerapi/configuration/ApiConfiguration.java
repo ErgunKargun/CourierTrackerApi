@@ -9,7 +9,6 @@ import org.ergunkargun.couriertrackerapi.jpa.entity.enumaration.Role;
 import org.ergunkargun.couriertrackerapi.service.ApiUserService;
 import org.ergunkargun.couriertrackerapi.service.StoreService;
 import org.ergunkargun.couriertrackerapi.service.observe.CourierLogEventListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cglib.core.internal.Function;
