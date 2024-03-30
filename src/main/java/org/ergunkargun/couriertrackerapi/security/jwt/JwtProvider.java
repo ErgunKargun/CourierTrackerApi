@@ -52,7 +52,7 @@ public class JwtProvider {
 
         var claims = claimsBuilder.build();
         Date issuedAt = new Date();
-        Date expiration = new Date(issuedAt.getTime() + jwtProperties.getExpirationDuration());
+        Date expiration = new Date(issuedAt.getTime() + jwtProperties.getExpirationDurationInSeconds());
 
         return Jwts.builder()
                 .claims(claims)

@@ -67,7 +67,7 @@ public class ApiConfiguration {
                 .build()
         );
 
-        apiUserService.read().forEach(user -> log.debug(String.format("User : %s created", user.toString())));
+        apiUserService.read().forEach(user -> log.debug(String.format("User %s created", user.toString())));
     }
 
     private void initializeStores(StoreService storeService) {

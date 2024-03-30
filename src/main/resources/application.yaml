@@ -27,3 +27,8 @@ spring:
     import: optional:secrets.yaml
 user:
   name: user
+api:
+  circumference-in-meters: 100
+  interval-in-minutes: 1
+jwt:
+  expiration-duration-in-seconds: 3600000 #1 hour

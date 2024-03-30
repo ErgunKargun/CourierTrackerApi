@@ -41,9 +41,9 @@ public class CourierLogEventListener {
         var distance = coordinateUtil.distanceBetween(store.getCoordinate(), courier.getCoordinate());
         courier.setDistance(courier.getDistance() + distance);
         courierService.update(courier);
-        if (distance > apiProperties.circumferenceInMeters)
+        if (distance > apiProperties.getCircumferenceInMeters())
             return;
-        var entrance = entranceService.read(courier.getId(), store.getId(), apiProperties.intervalInMinutes);
+        var entrance = entranceService.read(courier.getId(), store.getId(), apiProperties.getIntervalInMinutes());
         if(entrance.isEmpty()) {
             entranceService.create(Entrance
                     .builder()
@@ -52,7 +52,7 @@ public class CourierLogEventListener {
                     .time(LocalDateTime.now())
                     .build());
         } else {
-            log.info(String.format("Entrance is skipped cause an existing entrance found in the last %s minutes", apiProperties.intervalInMinutes));
+            log.info(String.format("Entrance is skipped cause an existing entrance found in the last %s minutes", apiProperties.getIntervalInMinutes()));
         }
     }
 }
