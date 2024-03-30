@@ -9,12 +9,14 @@ import org.ergunkargun.couriertrackerapi.jpa.entity.enumaration.Role;
 import org.ergunkargun.couriertrackerapi.service.ApiUserService;
 import org.ergunkargun.couriertrackerapi.service.StoreService;
 import org.ergunkargun.couriertrackerapi.service.observe.CourierLogEventListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cglib.core.internal.Function;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
@@ -24,6 +26,9 @@ import java.util.List;
 @Slf4j
 @Configuration
 public class ApiConfiguration {
+
+    @Autowired
+    private Environment environment;
 
     @Bean
     public Function<Store, CourierLogEventListener> storeFactory() {
@@ -47,21 +52,20 @@ public class ApiConfiguration {
     private void initializeApiUsers(ApiUserService apiUserService, PasswordEncoder passwordEncoder) {
 
         apiUserService.create(ApiUser.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("m!gr0s"))
+                .username(environment.getProperty("security.user.name"))
+                .password(passwordEncoder.encode(environment.getProperty("security.user.password")))
                 .role(Role.ADMIN)
                 .build()
         );
 
         apiUserService.create(ApiUser.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("m!gr0s"))
-                .role(Role.ADMIN)
+                .username(environment.getProperty("user.name"))
+                .password(passwordEncoder.encode(environment.getProperty("user.password")))
+                .role(Role.USER)
                 .build()
         );
 
-        log.debug("Printing Users");
-        apiUserService.read().forEach(user -> log.debug(String.format("User : %s ", user.toString())));
+        apiUserService.read().forEach(user -> log.debug(String.format("User : %s created", user.toString())));
     }
 
     private void initializeStores(StoreService storeService) {

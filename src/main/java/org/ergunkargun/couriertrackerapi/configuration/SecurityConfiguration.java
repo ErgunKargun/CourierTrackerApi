@@ -1,5 +1,6 @@
 package org.ergunkargun.couriertrackerapi.configuration;
 
+import org.ergunkargun.couriertrackerapi.jpa.entity.enumaration.Role;
 import org.ergunkargun.couriertrackerapi.jpa.repo.ApiUserRepo;
 import org.ergunkargun.couriertrackerapi.security.jwt.JwtFilter;
 import org.ergunkargun.couriertrackerapi.security.jwt.JwtProvider;
@@ -34,10 +35,13 @@ public class SecurityConfiguration {
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(c -> c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/auth/register").permitAll()
                         .requestMatchers("/auth/sign-in").permitAll()
                         .requestMatchers(("/h2-console/**")).permitAll()
                         .requestMatchers(HttpMethod.GET, "/v1/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/v1/stores/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/v1/stores/**").hasRole(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.PUT, "/v1/stores/**").hasRole(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.DELETE, "/v1/stores/**").hasRole(Role.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)

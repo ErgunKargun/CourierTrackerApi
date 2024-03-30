@@ -19,3 +19,11 @@ spring:
       ddl-auto: update
   profiles:
     active: @spring.profiles.active@
+  security:
+    user:
+      name: admin
+      password: m!gr0s
+
+user:
+  name: user
+  password: m!gr0s
