@@ -18,8 +18,8 @@ public class ApiUserModelAssembler implements RepresentationModelAssembler<ApiUs
         return EntityModel.of(apiUser,
                 linkTo(methodOn(ApiUserController.class).readApiUser(apiUser.getId())).withSelfRel(),
                 linkTo(methodOn(ApiUserController.class).readApiUsers()).withRel("users"),
-                linkTo(methodOn(AuthController.class).register(Auth.builder().build())).withRel("register"),
-                linkTo(methodOn(AuthController.class).signIn(Auth.builder().build())).withRel("sign-in"));
+                linkTo(methodOn(AuthController.class).register(Auth.builder().username(apiUser.getUsername()).build())).withRel("register"),
+                linkTo(methodOn(AuthController.class).signIn(Auth.builder().username(apiUser.getUsername()).build())).withRel("sign-in"));
     }
 }
 
