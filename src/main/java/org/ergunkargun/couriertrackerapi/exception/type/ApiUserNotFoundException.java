@@ -6,4 +6,8 @@ public class ApiUserNotFoundException extends NotFoundException {
     public ApiUserNotFoundException(Long id) {
         super("Could not find the api user with this id: " + id);
     }
+
+    public ApiUserNotFoundException(String username) {
+        super("Could not find the api user with this username: " + username);
+    }
 }

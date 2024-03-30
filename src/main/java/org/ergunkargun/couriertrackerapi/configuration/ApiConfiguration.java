@@ -27,8 +27,11 @@ import java.util.List;
 @Configuration
 public class ApiConfiguration {
 
-    @Autowired
-    private Environment environment;
+    private final Environment environment;
+
+    public ApiConfiguration(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean
     public Function<Store, CourierLogEventListener> storeFactory() {

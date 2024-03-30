@@ -23,7 +23,7 @@ spring:
     user:
       name: admin
       password: m!gr0s
-
+  config:
+    import: optional:secrets.yaml
 user:
   name: user
-  password: m!gr0s

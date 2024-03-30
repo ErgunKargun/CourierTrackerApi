@@ -29,6 +29,14 @@ public class ApiUserService {
         return apiUserRepo.findById(id).orElseThrow(() -> new ApiUserNotFoundException(id));
     }
 
+    public ApiUser read(String username) {
+        return apiUserRepo.findByUsername(username).orElseThrow(() -> new ApiUserNotFoundException(username));
+    }
+
+    public boolean isExists(String username) {
+        return apiUserRepo.findByUsername(username).isPresent();
+    }
+
     public ApiUser update(ApiUser apiUser) {
         return apiUserRepo.findById(apiUser.getId())
                 .map(user -> {

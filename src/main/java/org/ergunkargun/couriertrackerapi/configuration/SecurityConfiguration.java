@@ -38,7 +38,6 @@ public class SecurityConfiguration {
                         .requestMatchers("/auth/register").permitAll()
                         .requestMatchers("/auth/sign-in").permitAll()
                         .requestMatchers(("/h2-console/**")).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/v1/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/stores/**").hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/v1/stores/**").hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.DELETE, "/v1/stores/**").hasRole(Role.ADMIN.name())
@@ -50,8 +49,7 @@ public class SecurityConfiguration {
 
     @Bean
     UserDetailsService userDetailsService(ApiUserRepo apiUserRepo) {
-        return (username) -> apiUserRepo.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+        return (username) -> apiUserRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("Username %s not found", username)));
     }
 
     @Bean
