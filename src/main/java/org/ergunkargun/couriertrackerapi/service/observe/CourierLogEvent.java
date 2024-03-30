@@ -1,20 +1,17 @@
 package org.ergunkargun.couriertrackerapi.service.observe;
 
-import org.ergunkargun.couriertrackerapi.jpa.entity.Entrance;
+import lombok.Getter;
+import org.ergunkargun.couriertrackerapi.jpa.entity.Courier;
 import org.springframework.context.ApplicationEvent;
 
-import java.time.Clock;
+@Getter
+public class CourierLogEvent extends ApplicationEvent {
 
-public class EntranceEvent extends ApplicationEvent {
+    private final Courier courier;
 
-    private final Entrance entrance;
-
-    public EntranceEvent(Object source, Entrance entrance) {
-        super(source, Clock.systemUTC());
-        this.entrance = entrance;
+    public CourierLogEvent(Object source, Courier courier) {
+        super(source);
+        this.courier = courier;
     }
 
-    public Entrance getEntrance() {
-        return entrance;
-    }
 }

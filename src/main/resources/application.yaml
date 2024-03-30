@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: CourierTrackerApi
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:courier-tracker
+    username: admin
+    password: m!gr0s
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  profiles:
+    active: @spring.profiles.active@
