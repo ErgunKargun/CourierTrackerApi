@@ -8,7 +8,7 @@ A restful web api that mainly takes streaming geolocations of couriers (time, co
 
 ## Guide
 
-After successfully build the application on your local, firstly send HTTP POST request to [register](http://localhost:8080/auth/register) and then get your token over [sign-in](http://localhost:8080/auth/sign-in) endpoints.
+After successfully build the application on your local, firstly send http post request to [register](http://localhost:8080/auth/register) and then get your token over [sign-in](http://localhost:8080/auth/sign-in) endpoints.
 
 > Also you can skip register part by using h2 in-memory db username&password defined at config file and directly use sign-in endpoint to get your token. Because when app start, an admin user created by this informations.
 > Tokens expiration duration is also can managed by configuration and it is 1 hour as default. You should create your own secret.yaml configuration file after clone the project into your local machine.
