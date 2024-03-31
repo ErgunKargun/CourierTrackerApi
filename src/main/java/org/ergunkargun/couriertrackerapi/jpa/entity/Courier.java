@@ -1,5 +1,6 @@
 package org.ergunkargun.couriertrackerapi.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.*;
@@ -19,6 +20,7 @@ public class Courier extends PersistenceEntity<Long> {
     @Embedded
     private Coordinate coordinate;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime time;
 
     @Builder.Default
