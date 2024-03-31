@@ -1,5 +1,7 @@
 # Courier Tracker API
 
+[![Java CI with Maven](https://github.com/ErgunKargun/CourierTrackerApi/actions/workflows/maven.yml/badge.svg)](https://github.com/ErgunKargun/CourierTrackerApi/actions/workflows/maven.yml)
+
 ## What is this?
 
 A restful web api that mainly takes streaming geolocations of couriers (time, courier, lat, lng) as input and tracks its entrance into stores' circumference within specified radius of meters and duration interval.
