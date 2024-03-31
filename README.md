@@ -23,8 +23,8 @@ A restful web api that mainly takes streaming geolocations of couriers *(time, c
 
 > Tokens expiration duration is also *can managed by configuration* and it is **1 hour as default**.  
 > You should create your own ***secret.yaml*** configuration file after clone the project into your *local machine*.  
-> You can use
->> **/log/courier** endpoint to log courier geolocation and use
+> You can use below endpoints to test the application main purpose;
+>> **/log/courier** endpoint to log courier geolocation and use  
 >> **/entrances** endpoint to browse the entrances to the stores.  
 
 ## Prerequisites
