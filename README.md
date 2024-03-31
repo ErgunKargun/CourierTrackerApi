@@ -9,6 +9,8 @@ A restful web api that mainly takes streaming geolocations of couriers (time, co
 ## Guide
 
 After successfully build the application on your local, firstly send http post request to [register](http://localhost:8080/auth/register) and then get your token over [sign-in](http://localhost:8080/auth/sign-in) endpoints.
+You can reach API documentation either on localhost at /swagger endpoint or on [swaggerhub.com](https://app.swaggerhub.com/apis-docs/ErgunKargun/CourierTrackerApi/v1).
+To load api endpoints automatically into your postman, you can reach openapi specification definition yaml file either on localhost at /openapi endpoint to browse and /openapi.yaml endpoint to download or on [swaggerhub.com](https://app.swaggerhub.com/apis/ErgunKargun/CourierTrackerApi/v1).
 
 > Also you can skip register part by using h2 in-memory db username&password defined at config file and directly use sign-in endpoint to get your token. Because when app start, an admin user created by this informations.
 > Tokens expiration duration is also can managed by configuration and it is 1 hour as default. You should create your own secret.yaml configuration file after clone the project into your local machine.
@@ -20,7 +22,9 @@ Make sure you have installed the following software.
 
 * Java 17
 * Apache Maven 3.6.x
-* IDE(Intellij Idea or STS suggested)
+* An IDE(Intellij Idea or STS suggested)
+* An API Tool(Postman suggested)
+* A Browser
 
 ## Build 
 
