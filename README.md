@@ -18,7 +18,7 @@ A restful web api that mainly takes streaming geolocations of couriers (time, co
 
 ## Prerequisites
 
-Make sure you have installed the following software.
+Make sure you have installed the following softwares on your machine.
 
 * Java 17
 * Apache Maven 3.6.x
