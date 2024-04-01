@@ -43,9 +43,9 @@ public class StoreConfiguration implements BeanPostProcessor {
             storeBean.setCourierService(courierService);
             storeBean.setStoreService(storeService);
             storeBean.saveStore();
-        }
 
-        log.info(String.format("%s bean initialized successfully", beanName));
+            log.info(String.format("%s bean initialized successfully", beanName));
+        }
         return BeanPostProcessor.super.postProcessAfterInitialization(bean, beanName);
     }
 }
