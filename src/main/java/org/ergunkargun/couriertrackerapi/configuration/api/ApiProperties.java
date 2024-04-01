@@ -1,4 +1,4 @@
-package org.ergunkargun.couriertrackerapi.configuration.properties;
+package org.ergunkargun.couriertrackerapi.configuration.api;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

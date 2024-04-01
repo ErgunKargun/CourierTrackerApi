@@ -1,7 +1,6 @@
 package org.ergunkargun.couriertrackerapi.configuration.api;
 
 import lombok.extern.slf4j.Slf4j;
-import org.ergunkargun.couriertrackerapi.configuration.properties.ApiProperties;
 import org.ergunkargun.couriertrackerapi.helper.CoordinateUtil;
 import org.ergunkargun.couriertrackerapi.observe.CourierLogEventListener;
 import org.ergunkargun.couriertrackerapi.service.CourierService;

@@ -3,7 +3,7 @@ package org.ergunkargun.couriertrackerapi.observe;
 import jakarta.annotation.PostConstruct;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.ergunkargun.couriertrackerapi.configuration.properties.ApiProperties;
+import org.ergunkargun.couriertrackerapi.configuration.api.ApiProperties;
 import org.ergunkargun.couriertrackerapi.helper.CoordinateUtil;
 import org.ergunkargun.couriertrackerapi.jpa.entity.Courier;
 import org.ergunkargun.couriertrackerapi.jpa.entity.Entrance;
