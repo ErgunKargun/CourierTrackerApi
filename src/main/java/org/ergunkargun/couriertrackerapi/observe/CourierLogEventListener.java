@@ -21,17 +21,20 @@ import java.time.LocalDateTime;
 @Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class CourierLogEventListener {
 
-    @Autowired
-    private ApiProperties apiProperties;
+    private final ApiProperties apiProperties;
 
-    @Autowired
-    private CoordinateUtil coordinateUtil;
+    private final CoordinateUtil coordinateUtil;
 
-    @Autowired
-    private EntranceService entranceService;
+    private final EntranceService entranceService;
 
-    @Autowired
-    private CourierService courierService;
+    private final CourierService courierService;
+
+    public CourierLogEventListener(ApiProperties apiProperties, CoordinateUtil coordinateUtil, EntranceService entranceService, CourierService courierService) {
+        this.apiProperties = apiProperties;
+        this.coordinateUtil = coordinateUtil;
+        this.entranceService = entranceService;
+        this.courierService = courierService;
+    }
 
     @EventListener
     public void handleCourierLogEvent(CourierLogEvent event) {
