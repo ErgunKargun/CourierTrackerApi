@@ -10,6 +10,7 @@ import org.ergunkargun.couriertrackerapi.hateoas.CourierModelAssembler;
 import org.ergunkargun.couriertrackerapi.jpa.entity.Courier;
 import org.ergunkargun.couriertrackerapi.service.CourierService;
 import org.ergunkargun.couriertrackerapi.observe.CourierLogEvent;
+import org.ergunkargun.couriertrackerapi.service.StoreService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -33,22 +34,32 @@ public class CourierController {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    public CourierController(CourierService courierService, CourierModelAssembler courierModelAssembler, ApplicationEventPublisher eventPublisher) {
+    private final StoreService storeService;
+
+    public CourierController(CourierService courierService, CourierModelAssembler courierModelAssembler, ApplicationEventPublisher eventPublisher, StoreService storeService) {
         this.courierService = courierService;
         this.courierModelAssembler = courierModelAssembler;
         this.eventPublisher = eventPublisher;
+        this.storeService = storeService;
+    }
+
+    private void publishEvent(Courier courier) {
+        var stores = storeService.read();
+        for (var store : stores) {
+            eventPublisher.publishEvent(new CourierLogEvent(this, store, courier));
+        }
     }
 
     @PostMapping("/log/courier")
     public ResponseEntity<?> logCourier(@RequestBody Courier courier) {
-        eventPublisher.publishEvent(new CourierLogEvent(this, courier));
+        publishEvent(courier);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/courier")
     public ResponseEntity<?> createCourier(@RequestBody Courier courier) {
         Courier createdCourier = courierService.create(courier);
-        eventPublisher.publishEvent(new CourierLogEvent(this, createdCourier));
+        publishEvent(createdCourier);
         var entityModel = courierModelAssembler.toModel(createdCourier);
         return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
     }

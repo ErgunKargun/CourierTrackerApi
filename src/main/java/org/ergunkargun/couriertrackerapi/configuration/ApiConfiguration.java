@@ -33,17 +33,6 @@ public class ApiConfiguration {
     }
 
     @Bean
-    public Function<Store, CourierLogEventListener> storeFactory() {
-        return this::createStore;
-    }
-
-    @Bean
-    @Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public CourierLogEventListener createStore(Store store) {
-        return new CourierLogEventListener(store);
-    }
-
-    @Bean
     CommandLineRunner initialize(ApiUserService apiUserService, PasswordEncoder passwordEncoder, StoreService storeService) {
         return args -> {
             initializeApiUsers(apiUserService, passwordEncoder);
@@ -78,7 +67,6 @@ public class ApiConfiguration {
             List<Store> stores = new ObjectMapper().readValue(storeData, new TypeReference<>() {
             });
             storeService.create(stores);
-            stores.forEach(store -> storeFactory().apply(store));
         } catch (IOException e) {
             log.debug("Unable to save stores. " + e.getMessage());
         }

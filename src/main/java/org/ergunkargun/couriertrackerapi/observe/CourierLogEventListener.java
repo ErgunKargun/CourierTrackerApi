@@ -9,11 +9,16 @@ import org.ergunkargun.couriertrackerapi.jpa.entity.Store;
 import org.ergunkargun.couriertrackerapi.service.CourierService;
 import org.ergunkargun.couriertrackerapi.service.EntranceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Slf4j
+@Component
+@Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class CourierLogEventListener {
 
     @Autowired
@@ -28,22 +33,24 @@ public class CourierLogEventListener {
     @Autowired
     private CourierService courierService;
 
-    private final Store store;
-
-    public CourierLogEventListener(Store store) {
-        this.store = store;
-    }
-
     @EventListener
     public void handleCourierLogEvent(CourierLogEvent event) {
 
+        Store store = event.getStore();
+
         Courier courier = event.getCourier();
+
         var distance = coordinateUtil.distanceBetween(store.getCoordinate(), courier.getCoordinate());
+
         courier.setDistance(courier.getDistance() + distance);
+
         courierService.update(courier);
+
         if (distance > apiProperties.getCircumferenceInMeters())
             return;
+
         var entrance = entranceService.read(courier.getId(), store.getId(), apiProperties.getIntervalInMinutes());
+
         if(entrance.isEmpty()) {
             entranceService.create(Entrance
                     .builder()
