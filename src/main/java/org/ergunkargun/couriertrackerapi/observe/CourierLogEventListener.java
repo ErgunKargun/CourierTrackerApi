@@ -8,7 +8,6 @@ import org.ergunkargun.couriertrackerapi.jpa.entity.Entrance;
 import org.ergunkargun.couriertrackerapi.jpa.entity.Store;
 import org.ergunkargun.couriertrackerapi.service.CourierService;
 import org.ergunkargun.couriertrackerapi.service.EntranceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.event.EventListener;
