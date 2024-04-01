@@ -15,7 +15,8 @@ class CourierTrackerApiApplicationTests {
 
     @Test
     void contextLoads() {
-        Assertions.assertNotNull(applicationContext.getBean(CourierLogEventListener.class), "Stores are created");
+        var stores = applicationContext.getBeansOfType(CourierLogEventListener.class);
+        Assertions.assertEquals(5, stores.entrySet().size());
     }
 
 }
