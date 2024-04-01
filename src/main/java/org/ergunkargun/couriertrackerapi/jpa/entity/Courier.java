@@ -20,7 +20,7 @@ public class Courier extends PersistenceEntity<Long> {
     @Embedded
     private Coordinate coordinate;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private LocalDateTime time;
 
     @Builder.Default
