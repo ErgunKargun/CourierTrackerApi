@@ -1,4 +1,4 @@
-package org.ergunkargun.couriertrackerapi.configuration;
+package org.ergunkargun.couriertrackerapi.configuration.security;
 
 import org.ergunkargun.couriertrackerapi.jpa.entity.enumaration.Role;
 import org.ergunkargun.couriertrackerapi.jpa.repo.ApiUserRepo;

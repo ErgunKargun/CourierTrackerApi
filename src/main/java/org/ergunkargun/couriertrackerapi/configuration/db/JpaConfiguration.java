@@ -1,4 +1,4 @@
-package org.ergunkargun.couriertrackerapi.configuration;
+package org.ergunkargun.couriertrackerapi.configuration.db;
 
 import org.ergunkargun.couriertrackerapi.jpa.entity.record.Username;
 import org.springframework.context.annotation.Bean;

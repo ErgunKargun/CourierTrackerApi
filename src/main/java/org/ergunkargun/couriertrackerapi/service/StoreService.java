@@ -2,7 +2,6 @@ package org.ergunkargun.couriertrackerapi.service;
 
 import org.apache.commons.lang3.SerializationUtils;
 import org.ergunkargun.couriertrackerapi.exception.type.StoreNotFoundException;
-import org.ergunkargun.couriertrackerapi.jpa.entity.ApiUser;
 import org.ergunkargun.couriertrackerapi.jpa.entity.Store;
 import org.ergunkargun.couriertrackerapi.jpa.repo.StoreRepo;
 import org.springframework.cache.annotation.CachePut;
@@ -20,8 +19,8 @@ public class StoreService {
         this.storeRepo = storeRepo;
     }
 
-    public void create(List<Store> stores) {
-        storeRepo.saveAll(stores);
+    public List<Store> create(List<Store> stores) {
+        return storeRepo.saveAll(stores);
     }
 
     public Store create(Store store) {

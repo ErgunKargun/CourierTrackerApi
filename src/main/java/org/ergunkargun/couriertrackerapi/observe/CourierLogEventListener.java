@@ -1,5 +1,7 @@
 package org.ergunkargun.couriertrackerapi.observe;
 
+import jakarta.annotation.PostConstruct;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.ergunkargun.couriertrackerapi.configuration.properties.ApiProperties;
 import org.ergunkargun.couriertrackerapi.helper.CoordinateUtil;
@@ -8,37 +10,39 @@ import org.ergunkargun.couriertrackerapi.jpa.entity.Entrance;
 import org.ergunkargun.couriertrackerapi.jpa.entity.Store;
 import org.ergunkargun.couriertrackerapi.service.CourierService;
 import org.ergunkargun.couriertrackerapi.service.EntranceService;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
+import org.ergunkargun.couriertrackerapi.service.StoreService;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Slf4j
-@Component
-@Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class CourierLogEventListener {
+@Setter
+public class CourierLogEventListener implements ApplicationListener<CourierLogEvent> {
 
-    private final ApiProperties apiProperties;
+    private ApiProperties apiProperties;
 
-    private final CoordinateUtil coordinateUtil;
+    private CoordinateUtil coordinateUtil;
 
-    private final EntranceService entranceService;
+    private EntranceService entranceService;
 
-    private final CourierService courierService;
+    private CourierService courierService;
 
-    public CourierLogEventListener(ApiProperties apiProperties, CoordinateUtil coordinateUtil, EntranceService entranceService, CourierService courierService) {
-        this.apiProperties = apiProperties;
-        this.coordinateUtil = coordinateUtil;
-        this.entranceService = entranceService;
-        this.courierService = courierService;
+    private StoreService storeService;
+
+    private Store store;
+
+    @PostConstruct
+    public void init(){
+        log.info(store != null ? store.getName() : "null store" + " bean initialized");
     }
 
+    @Override
     @EventListener
-    public void handleCourierLogEvent(CourierLogEvent event) {
+    public void onApplicationEvent(CourierLogEvent event) {
 
-        Store store = event.getStore();
+        if (store == null)
+            return;
 
         Courier courier = event.getCourier();
 
@@ -53,7 +57,7 @@ public class CourierLogEventListener {
 
         var entrance = entranceService.read(courier.getId(), store.getId(), apiProperties.getIntervalInMinutes());
 
-        if(entrance.isEmpty()) {
+        if (entrance.isEmpty()) {
             entranceService.create(Entrance
                     .builder()
                     .courierId(courier.getId())
@@ -63,5 +67,14 @@ public class CourierLogEventListener {
         } else {
             log.info(String.format("Entrance is skipped cause an existing entrance found in the last %s minutes", apiProperties.getIntervalInMinutes()));
         }
+    }
+
+    @Override
+    public boolean supportsAsyncExecution() {
+        return true;
+    }
+
+    public void saveStore() {
+        storeService.create(store);
     }
 }

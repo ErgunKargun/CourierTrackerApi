@@ -6,12 +6,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 import org.ergunkargun.couriertrackerapi.hateoas.CourierModelAssembler;
 import org.ergunkargun.couriertrackerapi.jpa.entity.Courier;
-import org.ergunkargun.couriertrackerapi.service.CourierService;
 import org.ergunkargun.couriertrackerapi.observe.CourierLogEvent;
-import org.ergunkargun.couriertrackerapi.service.StoreService;
+import org.ergunkargun.couriertrackerapi.service.CourierService;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -24,8 +25,10 @@ import java.util.List;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Slf4j
 @RestController
 @RequestMapping("/v1")
+@DependsOn
 public class CourierController {
 
     private final CourierService courierService;
@@ -34,32 +37,22 @@ public class CourierController {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    private final StoreService storeService;
-
-    public CourierController(CourierService courierService, CourierModelAssembler courierModelAssembler, ApplicationEventPublisher eventPublisher, StoreService storeService) {
+    public CourierController(CourierService courierService, CourierModelAssembler courierModelAssembler, ApplicationEventPublisher eventPublisher) {
         this.courierService = courierService;
         this.courierModelAssembler = courierModelAssembler;
         this.eventPublisher = eventPublisher;
-        this.storeService = storeService;
-    }
-
-    private void publishEvent(Courier courier) {
-        var stores = storeService.read();
-        for (var store : stores) {
-            eventPublisher.publishEvent(new CourierLogEvent(this, store, courier));
-        }
     }
 
     @PostMapping("/log/courier")
     public ResponseEntity<?> logCourier(@RequestBody Courier courier) {
-        publishEvent(courier);
+        eventPublisher.publishEvent(new CourierLogEvent(this, courier));
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/courier")
     public ResponseEntity<?> createCourier(@RequestBody Courier courier) {
         Courier createdCourier = courierService.create(courier);
-        publishEvent(createdCourier);
+        eventPublisher.publishEvent(new CourierLogEvent(this, courier));
         var entityModel = courierModelAssembler.toModel(createdCourier);
         return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
     }
