@@ -34,7 +34,7 @@ public class CourierLogEventListener implements ApplicationListener<CourierLogEv
 
     @PostConstruct
     public void init(){
-        log.info(store != null ? store.getName() : "null store" + " bean initialized");
+        log.info((store != null ? store.getName() : "null store") + " bean initialized");
     }
 
     @Override

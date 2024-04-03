@@ -20,15 +20,15 @@ public class Initializr implements ApplicationContextInitializer<GenericApplicat
 
         try {
             InputStream storeData = TypeReference.class.getResourceAsStream("/data/stores-coordinates.json");
-            List<Store> storeList = new ObjectMapper().readValue(storeData, new TypeReference<>() {
+            List<Store> stores = new ObjectMapper().readValue(storeData, new TypeReference<>() {
             });
-            for (var store : storeList) {
+            for (var store : stores) {
                 var storeBean = new CourierLogEventListener();
                 storeBean.setStore(store);
                 applicationContext.registerBean("store-"+store.getName(), CourierLogEventListener.class, () -> storeBean);
             }
         } catch (IOException e) {
-            log.debug("Unable to save stores. " + e.getMessage());
+            log.debug("Unable to register stores. " + e.getMessage());
         }
     }
 }

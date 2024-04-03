@@ -1,5 +1,6 @@
 package org.ergunkargun.couriertrackerapi.controller;
 
+import jakarta.validation.Valid;
 import org.ergunkargun.couriertrackerapi.hateoas.ApiUserModelAssembler;
 import org.ergunkargun.couriertrackerapi.jpa.entity.ApiUser;
 import org.ergunkargun.couriertrackerapi.service.ApiUserService;
@@ -30,13 +31,13 @@ public class ApiUserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<?> createApiUser(@RequestBody ApiUser ApiUser) {
+    public ResponseEntity<?> createApiUser(@Valid @RequestBody ApiUser ApiUser) {
         ApiUser createdApiUser = apiUserService.create(ApiUser);
         var entityModel = apiUserModelAssembler.toModel(createdApiUser);
         return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
     }
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     public ResponseEntity<?> readApiUsers() {
         List<EntityModel<ApiUser>> apiUsers = apiUserService.read().stream().map(apiUserModelAssembler::toModel).toList();
         var collectionModel = CollectionModel.of(apiUsers, linkTo(methodOn(this.getClass()).readApiUsers()).withSelfRel());
@@ -64,7 +65,7 @@ public class ApiUserController {
         return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteApiUser(@PathVariable Long id) {
         apiUserService.delete(id);
         return ResponseEntity.noContent().build();

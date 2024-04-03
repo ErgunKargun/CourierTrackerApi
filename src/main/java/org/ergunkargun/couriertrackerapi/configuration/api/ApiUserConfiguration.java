@@ -28,7 +28,7 @@ public class ApiUserConfiguration {
     private void initializeApiUsers(ApiUserService apiUserService, PasswordEncoder passwordEncoder) {
 
         apiUserService.create(ApiUser.builder()
-                .email("abc.admin@migrosone.com")
+                .email("admin@migrosone.com")
                 .username(environment.getProperty("spring.security.user.name"))
                 .password(passwordEncoder.encode(environment.getProperty("spring.security.user.password")))
                 .role(Role.ADMIN)
@@ -36,7 +36,7 @@ public class ApiUserConfiguration {
         );
 
         apiUserService.create(ApiUser.builder()
-                .email("abc.user@migrosone.com")
+                .email("user@migrosone.com")
                 .username(environment.getProperty("api.user-name"))
                 .password(passwordEncoder.encode(environment.getProperty("api.user-password")))
                 .role(Role.USER)
